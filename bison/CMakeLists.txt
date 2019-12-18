@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
-
-set(PROJECT_NAME win_bison)
-
-project(${PROJECT_NAME} C)
-
 # Definition of Macros
 add_definitions(-D_CONSOLE)
 
@@ -18,11 +12,18 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/scan-skel.c")
 
 
 # Add executable to build.
-add_executable(${PROJECT_NAME} 
+add_executable(win_bison
    ${SOURCE_FILES}
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE "src")
-target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(win_bison PRIVATE "src")
+target_include_directories(win_bison PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_options(win_bison PRIVATE /sdl- /MP)
 
-target_link_libraries(${PROJECT_NAME} common_lib kernel32.lib user32.lib)
+target_link_libraries(win_bison common_lib kernel32.lib user32.lib)
+
+install(TARGETS win_bison
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)

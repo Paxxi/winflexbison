@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
-
-set(PROJECT_NAME win_flex)
-
-project(${PROJECT_NAME} C)
-
 # Definition of Macros
 add_definitions(-D_CONSOLE)
 
@@ -16,10 +10,17 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/libmain.c")
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/libyywrap.c")
 
 # Add executable to build.
-add_executable(${PROJECT_NAME} 
+add_executable(win_flex
    ${SOURCE_FILES}
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE "src")
+target_include_directories(win_flex PRIVATE "src")
+target_compile_options(win_flex PRIVATE /sdl- /MP)
 
-target_link_libraries(${PROJECT_NAME} common_lib kernel32.lib user32.lib Ws2_32.lib)
+target_link_libraries(win_flex common_lib kernel32.lib user32.lib Ws2_32.lib)
+
+install(TARGETS win_flex
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+)

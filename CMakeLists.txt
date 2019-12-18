@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project (winflexbison)
+project (winflexbison VERSION 2.5.20 LANGUAGES C CXX)
 
 if(NOT MSVC)
    message( FATAL_ERROR "Visual Studio Build supported only" )
@@ -22,29 +22,17 @@ endif()
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /W3 /MD /Od /Zi /EHsc")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /W3 /GL /Od /Oi /Gy /Zi /EHsc")
 
-# Define Release by default.
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release")
-  message(STATUS "Build type not specified: Use Release by default.")
-endif()
-
 add_subdirectory(common)
 add_subdirectory(flex)
 add_subdirectory(bison)
 
 
 # CPACK
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  install(DIRECTORY "bin/Debug/" DESTINATION "./")
-else()
-  install(DIRECTORY "bin/Release/" DESTINATION "./")
-endif()
-
 install(DIRECTORY "custom_build_rules/" DESTINATION "./custom_build_rules/")
-install(DIRECTORY "bison/data/" DESTINATION "./data/")
+install(DIRECTORY "bison/data/" DESTINATION "bin/data/")
 install(FILES "flex/src/FlexLexer.h" DESTINATION "./")
-install(FILES "changelog.md" DESTINATION "./")
-install(FILES "README.md" DESTINATION "./")
+# install(FILES "changelog.md" DESTINATION "./")
+# install(FILES "README.md" DESTINATION "./")
 
 set(PACKAGE_GENERATORS_DEFAULT ZIP)
 
